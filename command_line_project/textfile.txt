@@ -1,0 +1,10 @@
+ 
+cd - to change directory/ folder path
+mkdir/md -to create directory/folder
+echo. > textfile.txt - to create file in a directory
+dir - to list directory/ folder
+rmdir / rd- to remove directory/ folder
+del - to delete file
+move - to move/ rename file
+xcopy/ copy - to copy 
+more - to see detail text file 
