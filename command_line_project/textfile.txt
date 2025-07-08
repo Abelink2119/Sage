@@ -1,4 +1,5 @@
- 
+                Windows Command
+
 cd - to change directory/ folder path
 mkdir/md -to create directory/folder
 echo. > textfile.txt - to create file in a directory
@@ -8,3 +9,10 @@ del - to delete file
 move - to move/ rename file
 xcopy/ copy - to copy 
 more - to see detail text file 
+    
+               Linux Command 
+
+cd - to change directory
+ls- to list 
+mkdir- to create directory
+rmdir - to remove directory
