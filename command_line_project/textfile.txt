@@ -6,7 +6,6 @@ mkdir/md -to create directory/folder
 echo. > textfile.txt - to create file in a directory
 dir - to list directory/ folder
 rmdir -to remove directory
-rd- to remove directory/ folder
 del - to delete file
 move - to move/ rename file
 xcopy/ copy - to copy 
@@ -19,6 +18,5 @@ list of Linux command
 cd - to change directory
 ls- to list 
 mkdir- to create directory
-rmdir - to remove directory
-rd
+
 
