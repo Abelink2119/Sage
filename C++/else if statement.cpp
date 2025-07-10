@@ -7,7 +7,7 @@ int main() {
     cout << "Enter your age: ";
     cin >> age;
 
-    if (age < 0) {
+    if (age <1) {
         cout << "Age can't be negative!" << endl;
     } else if (age > 18) {
         cout << "Adult" << endl;
