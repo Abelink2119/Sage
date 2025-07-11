@@ -20,7 +20,7 @@ int main() {
     cout << "Enter second number: ";
     cin >> num2;
 
-    // Call the function
+    
     findLarger(num1, num2);
 
     return 0;
