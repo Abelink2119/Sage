@@ -1,17 +1,17 @@
 #include <iostream>
-#include <conio.h>   // for _kbhit() and _getch() (Windows)
-#include <windows.h> // for Sleep()
-#include <cstdlib>   // for rand()
+#include <conio.h>   
+#include <windows.h> 
+#include <cstdlib>   
 using namespace std;
 
 bool gameOver;
 const int width = 20;
 const int height = 10;
-int x, y;           // Snake head position
-int fruitX, fruitY; // Fruit position
+int x, y;          
+int fruitX, fruitY; 
 int score;
-int tailX[100], tailY[100]; // Tail positions
-int nTail;                  // Tail length
+int tailX[100], tailY[100];
+int nTail;                  
 
 enum eDirection { STOP = 0, LEFT, RIGHT, UP, DOWN };
 eDirection dir;
@@ -22,7 +22,7 @@ void Setup() {
     x = width / 2;
     y = height / 2;
 
-    // Spawn fruit at a position not inside the snake's tail
+    
     do {
         fruitX = rand() % width;
         fruitY = rand() % height;
@@ -57,15 +57,15 @@ void Draw() {
                     }
                 }
                 if (!printTail)
-                    cout << " "; // Empty space
+                    cout << " "; 
             }
 
-            if (j == width - 1) cout << "#"; // Right wall
+            if (j == width - 1) cout << "#"; 
         }
         cout << endl;
     }
 
-    // Draw bottom wall
+   
     for (int i = 0; i < width + 2; i++) cout << "#";
     cout << endl;
 
@@ -78,7 +78,7 @@ void Input() {
         switch (_getch()) {
         case 'a':
         case 'A':
-            if (dir != RIGHT) dir = LEFT; // Prevent reverse direction
+            if (dir != RIGHT) dir = LEFT; 
             break;
         case 'd':
         case 'D':
@@ -101,7 +101,7 @@ void Input() {
 }
 
 void Logic() {
-    // Update tail positions
+    
     int prevX = tailX[0];
     int prevY = tailY[0];
     int prev2X, prev2Y;
@@ -117,7 +117,7 @@ void Logic() {
         prevY = prev2Y;
     }
 
-    // Move head
+   
     switch (dir) {
     case LEFT:  x--; break;
     case RIGHT: x++; break;
@@ -126,25 +126,25 @@ void Logic() {
     default: break;
     }
 
-    // Wrap around screen edges
+    
     if (x >= width) x = 0; 
     else if (x < 0) x = width - 1;
 
     if (y >= height) y = 0; 
     else if (y < 0) y = height - 1;
 
-    // Check if head hits tail => game over
+   
     for (int i = 0; i < nTail; i++) {
         if (tailX[i] == x && tailY[i] == y) {
             gameOver = true;
         }
     }
 
-    // If snake eats fruit
+    
     if (x == fruitX && y == fruitY) {
         score += 10;
         
-        // Generate new fruit position avoiding snake body
+        
         bool validPosition = false;
         while (!validPosition) {
             fruitX = rand() % width;
@@ -172,11 +172,11 @@ int main() {
         Draw();
         Input();
         Logic();
-        Sleep(100); // Speed of the game, reduce to make it faster
+        Sleep(100); 
     }
     system("cls");
     cout << "Game Over! Final Score: " << score << endl;
     cout << "Press any key to exit..." << endl;
-    _getch(); // Pause before exit
+    _getch(); 
     return 0;
 }
