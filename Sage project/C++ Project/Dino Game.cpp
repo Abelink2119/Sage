@@ -1,44 +1,52 @@
-#include <iostream>      // for console input/output
-#include <conio.h>       // for _kbhit() and _getch() to detect keypress
-#include <windows.h>     // for Sleep() to control game speed and Beep() for sound
-#include <ctime>         // for srand(time(0)) random seed
-#include <vector>        // to store and manage obstacles dynamically
+#include <iostream>      // Provides standard input/output stream (cin, cout)
+#include <conio.h>       // For _kbhit() and _getch() to handle real-time keyboard input
+#include <windows.h>     // For Sleep() to delay game loop and Beep() to play sound
+#include <ctime>         // For time() to seed the random number generator
+#include <vector>        // Provides vector to manage a dynamic list of obstacles
 
-using namespace std;
+using namespace std;      // Avoid writing std:: everywhere
 
-const int width = 50;           // width of the game area
-const int height = 10;          // height of the game area
-int dinoY = height - 2;         // starting y-position of the dinosaur (ground level)
-bool jump = false;              // flag to indicate if dinosaur is jumping
-int jumpCount = 0;              // counter to manage jump height & duration
-bool gameOver = false;          // flag to stop game loop on collision
-int score = 0;                  // player�s score
+// Game area dimensions
+const int width = 50;           // Width of the game screen
+const int height = 10;          // Height of the game screen
 
-// Structure to represent an obstacle (a cactus)
+// Game state variables
+int dinoY = height - 2;         // Y-position of dinosaur; starts on ground
+bool jump = false;              // Flag: true if the dinosaur is jumping
+int jumpCount = 0;              // Counts how many steps into the jump we are
+bool gameOver = false;          // Flag: true when collision occurs
+int score = 0;                  // Player’s score, increases over time
+
+// Structure to represent a cactus obstacle
 struct Obstacle {
-    int x;                      // x-coordinate of the cactus
-    int y;                      // y-coordinate (usually ground level)
+    int x;                      // X-position of the cactus
+    int y;                      // Y-position of the cactus (ground level)
 };
 
-vector<Obstacle> obstacles;     // list of current obstacles
+// List of all current obstacles (dynamic)
+vector<Obstacle> obstacles;
 
-// Function to draw the game screen
+// Function to render the game screen
 void draw() {
-    system("cls");  // clear the console screen
+    system("cls");  // Clear the console screen
 
-    // Draw top border
+    // Draw the top border
     for (int i = 0; i < width + 2; i++) cout << "#";
     cout << "\n";
 
-    // Draw game area row by row
+    // Draw each row of the game area
     for (int y = 0; y < height; y++) {
-        cout << "#"; // left border
+        cout << "#"; // Left border
+
+        // Draw each column in the current row
         for (int x = 0; x < width; x++) {
             if (y == dinoY && x == 5) {
-                cout << "D";   // Draw the dinosaur at (5, dinoY)
+                cout << "D";   // Print dinosaur at its position
             }
             else {
-                bool isObstacle = false;
+                bool isObstacle = false;  // Flag to check if cactus is here
+
+                // Check if a cactus is at this position
                 for (auto &obs : obstacles) {
                     if (obs.x == x && obs.y == y) {
                         cout << "|";  // Draw cactus
@@ -46,115 +54,120 @@ void draw() {
                         break;
                     }
                 }
-                if (!isObstacle) cout << " ";  // empty space
+
+                if (!isObstacle) cout << " ";  // Empty space if no dino or cactus
             }
         }
-        cout << "#\n"; // right border
+
+        cout << "#\n"; // Right border
     }
 
-    // Draw bottom border
+    // Draw the bottom border
     for (int i = 0; i < width + 2; i++) cout << "#";
     cout << "\n";
 
-    // Show the score
+    // Display the score
     cout << "Score: " << score << endl;
 }
 
-// Function to handle the jump mechanic
+// Function to handle the dinosaur’s jump logic
 void updateJump() {
-    if (jump) {
-        if (jumpCount < 3) {      // going up
-            dinoY--;
+    if (jump) {  // If currently jumping
+        if (jumpCount < 3) {      // Moving up phase
+            dinoY--;             // Move dinosaur up
             jumpCount++;
         }
-        else if (jumpCount < 6) { // coming down
-            dinoY++;
+        else if (jumpCount < 6) { // Moving down phase
+            dinoY++;             // Move dinosaur down
             jumpCount++;
         }
-        if (jumpCount >= 6) {     // finished jumping
-            jump = false;
+
+        if (jumpCount >= 6) {     // Jump finished
+            jump = false;         // Reset jump
             jumpCount = 0;
-            dinoY = height - 2;   // reset to ground
+            dinoY = height - 2;   // Back to ground
         }
     }
 }
 
-// Check if dinosaur collides with a cactus
+// Function to check if dinosaur collides with a cactus
 void checkCollision() {
     for (auto &obs : obstacles) {
-        if (obs.x == 5 && obs.y == dinoY) {
-            gameOver = true;          // end game
-            Beep(400, 300);           // play game-over sound
+        if (obs.x == 5 && obs.y == dinoY) {  // Dino and cactus at same position
+            gameOver = true;                // End game
+            Beep(400, 300);                 // Play game over sound
         }
     }
 }
 
-// Add a new cactus on the rightmost edge
+// Function to spawn a new cactus at the far right
 void spawnObstacle() {
-    Obstacle obs;
-    obs.x = width - 1;          // start from far right
-    obs.y = height - 2;         // at ground level
-    obstacles.push_back(obs);
+    Obstacle obs;                // Create a new cactus
+    obs.x = width - 1;           // Place at rightmost column
+    obs.y = height - 2;          // Place on ground
+    obstacles.push_back(obs);   // Add to the list
 }
 
-// Move all obstacles to the left
+// Function to update positions of all cacti
 void updateObstacles() {
     for (int i = 0; i < obstacles.size(); i++) {
-        obstacles[i].x--;      // move left
+        obstacles[i].x--;       // Move each cactus left by 1
     }
-    // Remove cactus if it goes off screen
+
+    // Remove any cacti that have moved off the screen
     while (!obstacles.empty() && obstacles[0].x < 0) {
         obstacles.erase(obstacles.begin());
     }
 }
 
-// Main game loop
+// The main game loop where everything happens
 void gameLoop() {
-    int frame = 0;  // to count frames
-    while (!gameOver) {
-        draw();  // render the screen
+    int frame = 0;  // Frame counter
 
-        // Handle player input
+    while (!gameOver) { // Loop runs until collision
+        draw();         // Render the current frame
+
+        // Check for keyboard input
         if (_kbhit()) {
-            char ch = _getch();
-            if (ch == ' ' && !jump) {    // if SPACE pressed and not already jumping
-                jump = true;
-                Beep(1000, 100);         // play jump sound
+            char ch = _getch();   // Get the pressed key
+            if (ch == ' ' && !jump) {  // If SPACE pressed and not already jumping
+                jump = true;          // Start jump
+                Beep(1000, 100);      // Play jump sound
             }
         }
 
-        // Update game state
-        updateJump();         // handle jump
-        updateObstacles();    // move cacti
+        updateJump();         // Update dinosaur’s jump state
+        updateObstacles();    // Move all cacti
 
-        if (frame % 30 == 0) {  // spawn a cactus every 30 frames
+        if (frame % 30 == 0) {  // Every 30 frames spawn a new cactus
             spawnObstacle();
         }
 
-        checkCollision();     // check for crash
+        checkCollision();     // Detect collision
 
-        score++;              // increase score
+        score++;              // Increment score
 
-        Sleep(50);            // control speed (~20 fps)
-        frame++;
+        Sleep(50);            // Wait ~50ms to control speed (about 20 FPS)
+        frame++;              // Next frame
     }
 
-    // Game over screen
+    // When game is over, show final score
     cout << "\nGame Over! Final Score: " << score << endl;
 }
 
-// Program entry point
+// Main function: entry point of the program
 int main() {
-    srand(time(0));   // seed random number generator
+    srand(time(0));   // Seed the random number generator with current time
+
+    // Intro message
     cout << "=== DINO GAME ===\n";
     cout << "Press SPACE to jump and avoid the cacti!\n";
     cout << "Press any key to start...\n";
-    _getch();         // wait for player to press a key
+    _getch();         // Wait for the player to press a key
 
-    gameLoop();       // start the game loop
+    gameLoop();       // Start the game
 
     cout << "Press any key to exit...\n";
-    _getch();         // wait before closing
-    return 0;
+    _getch();         // Wait for key press before exiting
+    return 0;         // Exit the program
 }
- 
