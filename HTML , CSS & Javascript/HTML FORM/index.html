@@ -1,0 +1,101 @@
+<!Doctype html>
+<html>
+    <head>
+        <title> HTML FORM</title>
+    </head>
+    <body>
+        <form action="/test"method="get">
+            <!-- first name-->
+            <label for ="firstname">first name:</label>
+            <input type="text" id="firstname" name="first name"placeholder="Enter you first name" required/><br/><br/>
+            <!-- last name-->
+             <label for ="lasttname">last name:</label>
+            <input type="text" id="lasttname" name="last name" placeholder="Enter your last name" required/><br/></br>
+            <!-- Email -->
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" placeholder="Enter your email" required/><br/><br/>
+            <!-- Phone Number -->
+            <label for="phone">Phone Number:</label>
+            <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" required pattern="[0-9]{10}" title="Please enter a valid 10-digit phone number"/><br/><br/>
+            <!-- Date of Birth -->
+            <label for="dob">Date of Birth:</label>
+            <input type="date" id="dob" name="dob" required/><br/><br/>
+            <!-- Time -->
+            <label for="time">Time:</label>
+            <input type="time" id="time" name="time" required/><br/><br/>
+            <!-- Number -->
+            <label for="number">Number:</label>
+            <input type="number" id="number" name="number" placeholder="Enter a number" required min="1" max="100"/><br/><br/>
+            <!-- Range -->
+            <label for="range">Range:</label>
+            <input type="range" id="range" name="range" min="0" max="100" value="50" required/>
+            <br/><br/>
+            <!-- Color -->
+            <label for="color">Color:</label>
+            <input type="color" id="color" name="color" value="#ff0000" required/>
+            <br/><br/>
+            <!-- URL -->
+            <label for="url">Website:</label>
+            <input type="url" id="url" name="url" placeholder="Enter your website URL" required pattern="https?://.+" title="Please enter a valid URL starting with http:// or https://"/><br/><br/>
+            <!-- Search -->
+            <label for="search">Search:</label>
+            <input type="search" id="search" name="search" placeholder="Search"
+            required pattern=".{3,}" title="Search term must be at least 3 characters long"/><br/><br/>
+            
+            <!-- Password -->
+            <label for="password">Password:</label>
+            <input type="password" id="password" placeholder="Enter your password"required/>
+        
+            <br><br>
+             <!-- Radio Button -->
+             <label>Gender:</label>
+            <input type="radio" id="male" name="gender" value="male"required>
+            <label for="male">Male</label>
+
+            <input type="radio" id="female" name="gender" value="female"required>
+             <label for="female">Female</label>
+
+            <br><br>
+             <!-- Checkbox -->
+              <p>Select Hobbies</p>
+
+            <input type="checkbox" id="sport" required/>
+            <label for="sport">Sports</label><br>
+
+            <input type="checkbox" id="music" required />
+            <label for="music">Music</label><br>
+
+            <input type="checkbox" id="reading"required />
+            <label for="reading">Reading</label>
+            <br/><br/>
+
+            <!-- Select Box -->
+            <label for="country">Select your country:</label>
+           <select id="country" name="country">
+           <option value="">Select Country</option>
+           <option value="ET">Ethiopia</option>
+           <option value="US">United States</option>
+           <option value="CA">Canada</option>
+           <option value="GB">United Kingdom</option>
+           <option value="DE">Germany</option>
+           <option value="FR">France</option>
+           <option value="IN">India</option>
+           <option value="CN">China</option>
+           <option value="JP">Japan</option>
+           <option value="BR">Brazil</option>
+          </select>
+          <br/><br/>
+              <!-- Text Area -->
+              <label for="comments">Comments:</label>
+              <textarea id="comments" name="comments" rows="2" cols="30" placeholder="Enter your comments here..."></textarea>
+            <br/><br/>
+              <!-- File Upload -->
+            <label for="file">Upload File:</label>
+            <input type="file" id="file" name="file" accept=".jpg, .jpeg, .png, .pdf" />
+            <br/><br/>
+           <button type="submit">Submit</button>
+           <button type="Reset">Reset</button>
+           </form>
+
+    </body>
+</html>
