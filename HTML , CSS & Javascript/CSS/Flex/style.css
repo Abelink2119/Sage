@@ -1,0 +1,40 @@
+.flex-container {
+        background-color: rgb(133, 30, 119);
+        color:white;
+        font: size 80px;
+ 
+        padding: 20px;
+        width:1300px ;
+        height: 580px;
+        border-radius: 5px;
+        overflow:auto;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        flex-direction:row;
+        align-items: baseline;    
+}
+.flex-container div {
+        background-color: rgb(99, 196, 191);
+        color: white;
+        padding: 20px;
+        margin: 10px;
+        flex-grow: 1;
+        text-align: center;
+        border-radius: 15px;
+}
+.flex-container div:hover {
+        background-color: rgb(255, 255, 255);
+        color: black;
+        cursor: pointer;
+}
+.Dashboard {
+        background-color: rgb(99, 196, 191);
+        color: rgb(0, 0, 0);
+        padding: 50px;
+        margin: 30px;
+        flex-grow: 10;
+        text-align: center;
+        border-radius: 15px;
+}
+

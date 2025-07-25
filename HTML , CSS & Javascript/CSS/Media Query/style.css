@@ -1,0 +1,31 @@
+/* Default (Desktop) */
+body {
+    background-color: #87CEEB; /* light sky blue */
+}
+h1 {
+    font-size: 36px;
+    color: black;
+    text-align: center;
+}
+
+/* Mobile phones (<= 600px) */
+@media screen and (max-width: 600px) {
+    body {
+        background-color: #ADD8E6; /* lighter blue */
+    }
+    h1 {
+        font-size: 18px;
+        color: white;
+    }
+}
+
+/* Tablets (601px - 1000px) */
+@media screen and (min-width: 601px) and (max-width: 1000px) {
+    body {
+        background-color: #F0E68C; /* khaki */
+    }
+    h1 {
+        font-size: 28px;
+        color: darkblue;
+    }
+}
